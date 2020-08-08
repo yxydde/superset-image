@@ -8,4 +8,21 @@ RUN pip install --upgrade setuptools pip
 
 RUN pip install apache-superset
 
-EXPOSE 8080
+RUN superset db upgrade
+
+RUN superset fab create-admin \
+              --username admin \
+              --firstname Superset \
+              --lastname Admin \
+              --email admin@superset.com \
+              --password admin
+
+RUN superset load_examples
+
+RUN superset init
+
+EXPOSE 8088
+
+CMD superset run  -h 0.0.0.0 -p 8088 --with-threads
+
+
