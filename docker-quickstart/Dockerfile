@@ -11,3 +11,22 @@ RUN pip install --upgrade setuptools pip \
 	&& pip --no-cache-dir install impyla \
 	&& pip --no-cache-dir install mysqlclient \
 	&& pip --no-cache-dir install redis
+
+RUN superset db upgrade
+
+RUN superset fab create-admin \
+              --username admin \
+              --firstname Superset \
+              --lastname Admin \
+              --email admin@superset.com \
+              --password admin
+
+RUN superset load_examples
+
+RUN superset init
+
+EXPOSE 8088
+
+CMD superset run  -h 0.0.0.0 -p 8088 --with-threads
+
+
