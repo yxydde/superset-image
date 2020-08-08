@@ -33,6 +33,7 @@ function superset_run(){
   superset run -h 0.0.0.0 -p 8088 --with-threads
 }
 
+# 需要将 superset_config.py 挂载到此目录下
 export PYTHONPATH=/superset
 
 
