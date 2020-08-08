@@ -11,3 +11,11 @@ RUN pip install --upgrade setuptools pip \
 	&& pip --no-cache-dir install impyla \
 	&& pip --no-cache-dir install mysqlclient \
 	&& pip --no-cache-dir install redis
+
+EXPOSE 8088
+
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+
+ENTRYPOINT ["bash", "/docker-entrypoint.sh"]
+
+CMD ["run"]
