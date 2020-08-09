@@ -1,7 +1,7 @@
 FROM python:3.6.9
 
 RUN apt-get update -y \
-    && apt-get install build-essential libssl-dev libffi-dev python-dev python-pip libsasl2-dev libldap2-dev -y \
+    && apt-get install build-essential libssl-dev libffi-dev python-dev python-pip libsasl2-dev libldap2-dev dos2unix -y \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& rm -rf /var/cache/apk/*
 
@@ -16,6 +16,10 @@ EXPOSE 8088
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 
-ENTRYPOINT ["bash", "/docker-entrypoint.sh"]
+RUN dos2unix /docker-entrypoint.sh
+
+RUN chmod 755 /docker-entrypoint.sh
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 CMD ["run"]
