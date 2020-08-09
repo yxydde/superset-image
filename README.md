@@ -17,8 +17,7 @@ FLUSH PRIVILEGES;
 SQLALCHEMY_DATABASE_URI = 'mysql://superset:changeme@192.168.116.139/superset'
 
 # superset初始化
-~]# docker run -d \
-  -p 8088:8088 \
+~]# docker run -p 8088:8088 \
   -v /home/docker/superset/superset_config.py:/superset/superset_config.py \
   registry.cn-beijing.aliyuncs.com/basic-mirrors/superset init
   
