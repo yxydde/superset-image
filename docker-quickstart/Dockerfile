@@ -1,18 +1,10 @@
-FROM python:3.6.11-buster
+FROM preset/superset
 
-RUN apt-get update -y \
-    && apt-get install build-essential libssl-dev libffi-dev python-dev python-pip libsasl2-dev libldap2-dev -y \
-	&& rm -rf /var/lib/apt/lists/* \
-	&& rm -rf /var/cache/apk/*
+USER root
 
-RUN pip install --upgrade setuptools pip \
-    && pip --no-cache-dir install apache-superset \
-    && pip --no-cache-dir install elasticsearch-dbapi \
-	&& pip --no-cache-dir install impyla \
-	&& pip --no-cache-dir install mysqlclient \
-	&& pip --no-cache-dir install redis
+RUN pip --no-cache-dir install mysqlclient && pip --no-cache-dir install redis
 
-RUN superset db upgrade
+USER superset
 
 RUN superset fab create-admin \
               --username admin \
@@ -21,12 +13,10 @@ RUN superset fab create-admin \
               --email admin@superset.com \
               --password admin
 
+RUN superset db upgrade
+
 RUN superset load_examples
 
 RUN superset init
-
-EXPOSE 8088
-
-CMD superset run  -h 0.0.0.0 -p 8088 --with-threads
 
 

@@ -25,3 +25,27 @@ SQLALCHEMY_DATABASE_URI = 'mysql://superset:changeme@192.168.116.139/superset'
   -v /home/docker/superset/superset_config.py:/superset/superset_config.py \
   registry.cn-beijing.aliyuncs.com/basic-mirrors/superset
 ```
+
+# 使用 preset/superset 基础镜像
+
+https://hub.docker.com/r/preset/superset
+
+```
+docker run -d -p 8080:8080 \
+        -v /home/docker/superset/superset_config.py:/app/pythonpath/superset_config.py \
+        --name superset pregistry.cn-beijing.aliyuncs.com/basic-mirrors/preset-superset
+
+docker exec -it superset superset fab create-admin \
+               --username admin \
+               --firstname Superset \
+               --lastname Admin \
+               --email admin@superset.com \
+               --password admin
+
+docker exec -it superset superset db upgrade
+
+docker exec -it superset superset load_examples
+
+docker exec -it superset superset init
+```
+
