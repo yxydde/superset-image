@@ -33,7 +33,7 @@ https://hub.docker.com/r/preset/superset
 ```
 docker run -d -p 8080:8080 \
         -v /home/docker/superset/superset_config.py:/app/pythonpath/superset_config.py \
-        --name superset pregistry.cn-beijing.aliyuncs.com/basic-mirrors/preset-superset
+        --name superset registry.cn-beijing.aliyuncs.com/basic-mirrors/preset-superset
 
 docker exec -it superset superset fab create-admin \
                --username admin \
